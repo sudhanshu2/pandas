@@ -396,8 +396,6 @@ class Block(PandasObject, libinternals.Block):
         """
         assert self.ndim == 2
 
-        print(f"BLOCKS: split!")
-
         for i, ref_loc in enumerate(self._mgr_locs):
             vals = self.values[slice(i, i + 1)]
 
@@ -1620,7 +1618,6 @@ class EABackedBlock(Block):
         `indexer` is a direct slice/positional indexer. `value` must
         be a compatible shape.
         """
-        print(f"BLOCKS: indexer : {indexer} and value {value}")
         orig_indexer = indexer
         orig_value = value
 
