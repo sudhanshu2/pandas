@@ -798,6 +798,7 @@ class BaseBlockManager(PandasObject):
 
         pandas-indexer with -1's only.
         """
+
         if indexer is None:
             if new_axis is self.axes[axis]:
                 return self
@@ -816,7 +817,7 @@ class BaseBlockManager(PandasObject):
 
         if axis >= self.ndim:
             raise IndexError("Requested axis not found in manager")
-
+        
         if axis == 0:
             new_blocks = list(
                 self._slice_take_blocks_ax0(
@@ -878,6 +879,7 @@ class BaseBlockManager(PandasObject):
         ------
         Block : New Block
         """
+
         allow_fill = fill_value is not lib.no_default
 
         sl_type, slobj, sllen = _preprocess_slice_or_indexer(
@@ -935,7 +937,6 @@ class BaseBlockManager(PandasObject):
         for blkno, mgr_locs in libinternals.get_blkno_placements(blknos, group=group):
             if blkno == -1:
                 # If we've got here, fill_value was not lib.no_default
-
                 yield self._make_na_block(
                     placement=mgr_locs,
                     fill_value=fill_value,
@@ -997,6 +998,8 @@ class BaseBlockManager(PandasObject):
             dtype = interleaved_dtype([blk.dtype for blk in self.blocks])
             if dtype is not None and np.issubdtype(dtype.type, np.floating):
                 fill_value = dtype.type(fill_value)
+            elif dtype is not None and np.issubdtype(dtype.type, np.datetime64):
+                fill_value = np.datetime64("nat")
 
         shape = (len(placement), self.shape[1])
 

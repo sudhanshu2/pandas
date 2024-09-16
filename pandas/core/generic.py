@@ -5406,6 +5406,7 @@ class NDFrame(PandasObject, indexing.IndexingMixin):
     ) -> Self:
         """allow_dups indicates an internal call here"""
         # reindex doing multiple operations on different axes if indicated
+
         new_data = self._mgr
         for axis in sorted(reindexers.keys()):
             index, indexer = reindexers[axis]

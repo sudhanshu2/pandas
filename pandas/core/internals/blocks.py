@@ -282,6 +282,8 @@ class Block(PandasObject, libinternals.Block):
         """
         new_mgr_locs = self._mgr_locs[slc]
 
+        print(f"BLOCKS: slicing!")
+
         new_values = self._slice(slc)
         refs = self.refs
         return type(self)(new_values, new_mgr_locs, self.ndim, refs=refs)
@@ -393,6 +395,8 @@ class Block(PandasObject, libinternals.Block):
         Split a block into a list of single-column blocks.
         """
         assert self.ndim == 2
+
+        print(f"BLOCKS: split!")
 
         for i, ref_loc in enumerate(self._mgr_locs):
             vals = self.values[slice(i, i + 1)]
@@ -1616,6 +1620,7 @@ class EABackedBlock(Block):
         `indexer` is a direct slice/positional indexer. `value` must
         be a compatible shape.
         """
+        print(f"BLOCKS: indexer : {indexer} and value {value}")
         orig_indexer = indexer
         orig_value = value
 
